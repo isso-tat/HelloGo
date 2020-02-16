@@ -6,7 +6,7 @@ type Server struct {
 	Echo *echo.Echo
 }
 
-func NewServer () *Server {
+func NewServer() *Server {
 	server := &Server{}
 
 	server.SetRouting()

@@ -4,7 +4,7 @@ import (
     "github.com/tatsuki5820iso/HelloGo/core"
 )
 
-// TODO: Set this in .env file
+// TODO: SetMiddleware this in .env file
 const PORT = ":8000"
 
 func main() {

@@ -8,11 +8,17 @@ go build main.go
 ./main
 ```
 
-## Server
+or, just run:
 ```
-go run server.go
+go run main.go
 ```
 Access http://localhost:8000/test/hoge and see if it works!
+
+## Authorization
+```
+curl -X POST -d 'username=foo' -d 'password=bar' http://localhost:8000/login
+curl -X GET http://localhost:8000/me -H "Authorization: Bearer ey..."
+```
 
 ## Reference
 Go Authorized documents

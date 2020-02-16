@@ -9,14 +9,28 @@ import (
 func (server *Server) SetRouting() {
 	e := echo.New()
 
+	// SetMiddleware middleware.
+	// Also get authenticate require route group
+	authGroup := SetMiddleware(e)
+
 	// Routing
 	e.GET("/", func(c echo.Context) error {
 		return c.String(http.StatusOK, "Hello, World!")
 	})
-	e.GET("/test/:param", controllers.Test)
+	e.GET("/test/:param", controllers.TestGet)
+	e.POST("/test", controllers.TestPost)
+
+	// Authentication
+	e.POST("/login", controllers.Login)
+
+	// Needs authentication
+	// The authenticated user.
+	authGroup.GET("/me", controllers.GetMe)
 
 	// Users
-	e.GET("/users/:id", controllers.GetUser)
+	authGroup.GET("/users/:id", controllers.GetUser)
 
 	server.Echo = e
 }
+
+
