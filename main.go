@@ -1,30 +1,14 @@
 package main
 
 import (
-    "fmt"
-    "log"
-    "net/http"
-    "strings"
+    "github.com/tatsuki5820iso/HelloGo/core"
 )
 
+// TODO: Set this in .env file
+const PORT = ":8000"
+
 func main() {
-    http.HandleFunc("/", hello) //アクセスのルーティングを設定します。
-    err := http.ListenAndServe(":9090", nil) //監視するポートを設定します。
-    if err != nil {
-        log.Fatal("ListenAndServe: ", err)
-    }
-}
+    server := core.NewServer()
 
-func hello(w http.ResponseWriter, r *http.Request) {
-    _ = r.ParseForm()   //オプションを解析します。デフォルトでは解析しません。
-    fmt.Println(r.Form) //このデータはサーバのプリント情報に出力されます。
-    fmt.Println("path", r.URL.Path)
-    fmt.Println("scheme", r.URL.Scheme)
-    fmt.Println(r.Form["url_long"])
-    for k, v := range r.Form {
-        fmt.Println("key:", k)
-        fmt.Println("val:", strings.Join(v, ""))
-    }
-    fmt.Fprintf(w, "Hello astaxie!") //ここでwに入るものがクライアントに出力されます。
+    server.Echo.Logger.Fatal(server.Echo.Start(PORT))
 }
-
