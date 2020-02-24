@@ -1,6 +1,16 @@
-version: '3'
+version: '3.7'
 services:
-  web:
-    build: ../
+  prod:
+    hostname: hello-go-prod
+    restart: unless-stopped
+    build:
+        context: ..
+        dockerfile: Dockerfile
+        target: base
     ports:
-     - "81:8000"
+     - "8000:8000"
+    volumes:
+        - ..:/go/src/github.com/tatsuki5820iso/HelloGo
+    working_dir: /go/src/github.com/tatsuki5820iso/HelloGo
+    command: bash -c "export GO111MODULE=on && go mod download && echo 'mod download finished' && go build -o ./main main.go && echo 'build finished' && ./main"
+    # command: bash -c "go mod download && go build -o ./main main.go && ./main"

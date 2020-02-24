@@ -1,16 +1,10 @@
-FROM golang:1.11.5
+# Production environment (alias:base)
+FROM golang:1.12-alpine as base
+RUN apk update && apk upgrade && \
+    apk add --no-cache bash git openssh
+WORKDIR /home/HelloGo
+RUN ls
+RUN ls
 
-ENV APP_NAME github.com/tatsuki5820iso/HelloGo
-ENV PORT 8000
-
-COPY . /go/src/${APP_NAME}
-WORKDIR /go/src/${APP_NAME}
-
-RUN pwd
-
-RUN go get .
-RUN go build -o ${APP_NAME}
-
-CMD ./${APP_NAME}
-
-EXPOSE ${PORT}
+# Dev environment (alias:dev)
+# FROM base as dev
