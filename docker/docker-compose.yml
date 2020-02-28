@@ -12,5 +12,17 @@ services:
     volumes:
         - ..:/go/src/github.com/tatsuki5820iso/HelloGo
     working_dir: /go/src/github.com/tatsuki5820iso/HelloGo
-    command: bash -c "export GO111MODULE=on && go mod download && echo 'mod download finished' && go build -o ./main main.go && echo 'build finished' && ./main"
-    # command: bash -c "go mod download && go build -o ./main main.go && ./main"
+    command: bash -c "export GO111MODULE=on && go mod download && go build -o ./main main.go && ./main"
+  dev:
+    hostname: hello-go-dev
+    restart: unless-stopped
+    build:
+        context: ..
+        dockerfile: Dockerfile
+        target: dev
+    ports:
+     - "8001:8000"
+    volumes:
+        - ..:/go/src/github.com/tatsuki5820iso/HelloGo
+    working_dir: /go/src/github.com/tatsuki5820iso/HelloGo
+    command: bash -c "export GO111MODULE=on && go mod download && cd docker &&  make serve"
